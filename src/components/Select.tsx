@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import SelectUnstyled, { SelectUnstyledProps, SelectUnstyledOwnerState } from '@mui/base/SelectUnstyled';
 import OptionUnstyled, { OptionUnstyledProps } from '@mui/base/OptionUnstyled';
+import { CaretDownFill, CaretUpFill } from 'grommet-icons';
 import { OptionState } from '@mui/base/ListboxUnstyled';
 
 interface SelectProps<TValue> extends SelectUnstyledProps<TValue> {
@@ -38,10 +39,11 @@ export const SelectOption = React.forwardRef(function SelectOption<TValue>(props
 interface SelectButtonStyledProps<TValue> extends SelectProps<TValue> { className?: string, ownerState: SelectUnstyledOwnerState<TValue> }
 
 const SelectButtonStyled = React.forwardRef(function SelectButton<TValue = string>(props: SelectButtonStyledProps<TValue>, ref: React.ForwardedRef<HTMLButtonElement>) {
-  const { className, variant, color, size, ownerState, ...rest } = props;
+  const { className, variant, color, size, ownerState, children, ...rest } = props;
 
   // @ts-ignore
-  return <button className={clsx('font-medium', 
+  return <button className={clsx('font-medium',
+    'flex', 'items-center',
     'focus:outline-none focus:ring focus:ring-pink-300',
     'text-grey-800', 'min-h-input', 'min-w-input', {
     'rounded-md': (variant === 'bordered' || variant === 'filled') && !ownerState.open,
@@ -51,11 +53,11 @@ const SelectButtonStyled = React.forwardRef(function SelectButton<TValue = strin
     'border-pink-600': (variant === 'bordered' || variant === "underlined") && color === 'primary',
     'border-grey-500': (variant === 'bordered' || variant === "underlined") && color === 'secondary',
     'bg-neutral-300': variant === 'filled',
-    'p-2': size === 'md',
-    'p-3': size === 'lg',
-    'p-1': size === 'sm',
+    'p-3': size === 'sm',
+    'p-4': size === 'md',
+    'p-5': size === 'lg',
   }, 
-  className)} ref={ref} {...rest}/>;
+  className)} ref={ref} {...rest}>{children}{ownerState.open ? <CaretUpFill className="ml-auto" /> : <CaretDownFill className="ml-auto" />}</button>;
 })
 
 const Select = React.forwardRef(function Select<TValue>(props: SelectProps<TValue>, ref: React.ForwardedRef<HTMLUListElement>) {

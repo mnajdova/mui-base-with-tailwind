@@ -11,8 +11,7 @@ interface ButtonProps extends ButtonUnstyledProps {
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { color = 'primary', variant = "filled", size = 'md', className, ...other } = props;
 
-  // TODO: add focus visible classes
-  return <ButtonUnstyled ref={ref} {...other} className={clsx('rounded-md', 'font-medium', {
+  return <ButtonUnstyled ref={ref} {...other} className={clsx('rounded-md', 'font-medium', 'focus:outline-none', 'focus:ring', 'focus:ring-pink-200', {
     'bg-pink-700': variant === 'filled' && color === 'primary',
     'hover:bg-pink-900': variant === 'filled' && color === 'primary',
     'text-white': variant === 'filled' && color === 'primary',
